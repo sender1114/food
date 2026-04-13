@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="სკანერი">
+<title>სკანერი</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;სკანერი&quot;,&quot;short_name&quot;:&quot;სკანერი&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;%230a0a0f&quot;,&quot;theme_color&quot;:&quot;%230a0a0f&quot;,&quot;start_url&quot;:&quot;/food/scanner.html&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}]}">
+<script src="https://unpkg.com/@zxing/library@0.19.1/umd/index.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=FiraGO:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--green:#1D9E75;--blue:#378ADD;--red:#E24B4A;--amber:#EF9F27;--bg:#0a0a0f;--card:#13131a;--card2:#1a1a24;--border:rgba(255,255,255,0.07);--text:rgba(255,255,255,0.95);--muted:rgba(255,255,255,0.4);--hint:rgba(255,255,255,0.2)}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'FiraGO',-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+
+/* HOME */
+.home{padding:0;background:var(--bg)}
+.home-hero{padding:56px 24px 32px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:-80px;right:-60px;width:280px;height:280px;background:var(--green);border-radius:50%;opacity:0.06;pointer-events:none}
+.hero-glow2{position:absolute;bottom:-100px;left:-40px;width:200px;height:200px;background:var(--blue);border-radius:50%;opacity:0.05;pointer-events:none}
+.home-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:99px;padding:5px 12px;font-size:11px;color:var(--green);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:20px}
+.home-tag span{width:6px;height:6px;border-radius:50%;background:var(--green);display:block}
+.home-title{font-size:36px;font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:10px}
+.home-title em{font-style:normal;color:var(--green)}
+.home-sub{font-size:15px;color:var(--muted);line-height:1.6;max-width:280px}
+.scan-btn-wrap{padding:0 24px 24px}
+.scan-btn{width:100%;padding:18px;background:var(--green);border:none;border-radius:18px;color:#fff;font-size:16px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:-0.3px;transition:transform 0.15s,opacity 0.15s}
+.scan-btn:active{transform:scale(0.97);opacity:0.9}
+.scan-btn svg{width:20px;height:20px}
+.manual-btn{width:100%;padding:14px;background:none;border:1px solid var(--border);border-radius:14px;color:var(--muted);font-size:14px;cursor:pointer;margin-top:10px;transition:background 0.15s}
+.manual-btn:active{background:var(--card)}
+.targets-section{padding:0 24px 24px}
+.section-label{font-size:11px;font-weight:600;color:var(--hint);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px}
+.targets-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.target-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px}
+.target-dot{width:6px;height:6px;border-radius:50%;margin-bottom:10px}
+.target-name{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.target-val{font-size:22px;font-weight:600;letter-spacing:-0.5px}
+.target-unit{font-size:12px;color:var(--muted);font-weight:400}
+.history-section{padding:0 24px 40px}
+.history-empty{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;color:var(--hint);font-size:13px}
+
+/* SCANNER */
+.scanner-screen{background:#000;position:relative}
+.scanner-header{position:absolute;top:0;left:0;right:0;z-index:10;padding:52px 20px 20px;display:flex;align-items:center;justify-content:space-between}
+.back-btn{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.back-btn svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round}
+.scanner-title{font-size:14px;font-weight:500;color:#fff}
+#video{width:100%;height:100vh;object-fit:cover;display:block}
+.scan-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.scan-frame{width:260px;height:160px;position:relative}
+.scan-frame::before,.scan-frame::after{content:'';position:absolute;width:30px;height:30px;border-color:#fff;border-style:solid}
+.scan-frame::before{top:0;left:0;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
+.scan-frame::after{top:0;right:0;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
+.scan-frame-b::before,.scan-frame-b::after{content:'';position:absolute;width:30px;height:30px;border-color:#fff;border-style:solid}
+.scan-frame-b::before{bottom:0;left:0;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
+.scan-frame-b::after{bottom:0;right:0;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
+.scan-line{position:absolute;left:0;right:0;height:1px;background:rgba(29,158,117,0.8);animation:scanline 2s ease-in-out infinite}
+@keyframes scanline{0%{top:0}50%{top:100%}100%{top:0}}
+.scan-hint{position:absolute;bottom:80px;left:0;right:0;text-align:center;color:rgba(255,255,255,0.6);font-size:13px}
+
+/* RESULT */
+.result-screen{background:var(--bg)}
+.result-header{padding:52px 24px 20px;display:flex;align-items:center;gap:16px}
+.result-back{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.result-back svg{width:16px;height:16px;stroke:var(--text);fill:none;stroke-width:2;stroke-linecap:round}
+.result-product-name{font-size:16px;font-weight:600;line-height:1.3}
+.result-brand{font-size:13px;color:var(--muted);margin-top:2px}
+.verdict-card{margin:0 24px 16px;border-radius:20px;padding:20px;position:relative;overflow:hidden}
+.verdict-card.green{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25)}
+.verdict-card.amber{background:rgba(239,159,39,0.1);border:1px solid rgba(239,159,39,0.25)}
+.verdict-card.red{background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.25)}
+.verdict-icon{font-size:32px;margin-bottom:8px}
+.verdict-title{font-size:18px;font-weight:700;margin-bottom:4px}
+.verdict-card.green .verdict-title{color:var(--green)}
+.verdict-card.amber .verdict-title{color:var(--amber)}
+.verdict-card.red .verdict-title{color:var(--red)}
+.verdict-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.cal-hero-card{margin:0 24px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}
+.cal-big-row{display:flex;align-items:baseline;gap:6px;margin-bottom:16px}
+.cal-number{font-size:48px;font-weight:700;letter-spacing:-2px}
+.cal-suffix{font-size:16px;color:var(--muted)}
+.cal-per{font-size:12px;color:var(--hint);margin-top:4px}
+.macros-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.macro-pill{background:var(--card2);border-radius:12px;padding:12px 10px;text-align:center}
+.macro-pill-name{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.macro-pill-val{font-size:18px;font-weight:600}
+.macro-pill-unit{font-size:11px;color:var(--hint)}
+.remaining-card{margin:0 24px 16px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}
+.remaining-title{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:14px}
+.remaining-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.remaining-label{font-size:14px;color:var(--muted)}
+.remaining-val{font-size:14px;font-weight:600}
+.remaining-bar{width:100%;height:3px;background:rgba(255,255,255,0.07);border-radius:99px;margin-top:4px;overflow:hidden}
+.remaining-fill{height:100%;border-radius:99px;transition:width 0.4s}
+.add-btn{margin:0 24px 40px;width:calc(100% - 48px);padding:16px;background:var(--green);border:none;border-radius:16px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:transform 0.15s}
+.add-btn:active{transform:scale(0.97)}
+
+/* MANUAL */
+.manual-screen{background:var(--bg)}
+.manual-header{padding:52px 24px 24px;display:flex;align-items:center;gap:16px}
+.manual-title{font-size:20px;font-weight:700}
+.manual-input-wrap{padding:0 24px 16px}
+.manual-input{width:100%;padding:14px 16px;background:var(--card);border:1px solid var(--border);border-radius:14px;color:var(--text);font-size:16px;outline:none;-webkit-appearance:none}
+.manual-input:focus{border-color:rgba(29,158,117,0.4)}
+.manual-input::placeholder{color:var(--hint)}
+.manual-search-btn{margin:0 24px;width:calc(100% - 48px);padding:14px;background:var(--green);border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.manual-results{padding:16px 24px 40px}
+.manual-result-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:background 0.15s}
+.manual-result-item:active{background:var(--card2)}
+.mri-name{font-size:14px;font-weight:500;margin-bottom:3px}
+.mri-detail{font-size:12px;color:var(--muted)}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:14px;font-weight:500;padding:11px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity 0.25s;white-space:nowrap;z-index:999}
+.toast.show{opacity:1}
+
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;gap:12px;color:var(--muted);font-size:13px}
+.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="home-screen">
+  <div class="home">
+    <div class="home-hero">
+      <div class="hero-glow"></div>
+      <div class="hero-glow2"></div>
+      <div class="home-tag"><img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/wAARCAGbAgADASIAAhEBAxEB/8QAHQABAAMAAgMBAAAAAAAAAAAAAAcICQUGAQMEAv/EAE8QAQAAAwUCBgwKCQIFBQAAAAABAgMEBQYHERhVCBIhMZSVFThBUVZhdZGT0dLTCRMWIjRScXKxsxQ2N3SBkqGywiMyU2JzgsEkM0Jjov/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwC3wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPTU5bVThHvavc9M/0yT7vre4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHpn+mSfd9b3PxVkjNGE0kYQnhzReP9f/AOv+oPYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPntlvsFi+mW2zWb/q1ZZPxi+X5QXDvu7OlSesHJDjflBcO+7s6VJ6z5QXDvu7OlSesHJDjflBcO+7s6VJ636pX5clWpLTpXxd9SeaOksstpkjGP8NQcgAAAAAAAAPXarRZ7LRjWtVelQpw556k8JZYfxi+H5QXDvu7OlSesHJDjflBcO+7s6VJ6z5QXDvu7OlSesHJDjflBcO+7s6VJ63mW/wC4ppoSy31dsYxjpCELVJy/1ByI8U55KkvGpzyzy9+WOsHkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH4tFajZrPUtFoqyUqNKWM9SpPNCEsssIaxjGMeaCkXCD4Vl8Xnb7RcGWtonu27qU8ZKl6QhD4606f8PWHzJfHzx8SSeH7j204fwBYMIXdWjTtF/zzRtU0s+k0LNT01l059J5owhr3pZoKFg+y9L1vO9bXNbLzvG1260zck1a0Vpqk8f+6aMYvl48/wBebzpIyjyQzAzOoT23Dt3UaV2yTxkmt9tq/FUYzQ54Sx0jNNGHd4sI6d1I2xtmlvXC3S63ugVx48/15vOcef683nWO2Ns0t64W6XW90bG2aW9cLdLre6BXHjz/AF5vO/VOtWp1JalOrUknljCaWaWaMIwjDmjCKxmxtmlvXC3S63un7o8DTM6arLLWvjC8lOMfnTS2mtNGEO/p8VDUE5cBTHt+Yxy3vC7b+tNW217ktMlGjaqs0Zp56U8sYyyzRjzxl0jyxjrpGHeWGR/kNlhdmVOB5MP2G0TWy01anx9ttc0vFjWqxhCGsIdyWEIaQh/5SAAAAAA8vADNXhX5hX/i/Nu/LvtVttEl1XTbaljsdjhNGEknxceLGeMOaM0YwjHXxog48/15vOvHwi+C1aca4vtOLMF3lYrFbLfNCe22S2RmlpTVO7UlmlhGMNdOWGnP3kVbG2aW9cLdLre6BXHjz/Xm85x5/rzedY7Y2zS3rhbpdb3RsbZpb1wt0ut7oFcePP8AXm85x5/rzedY7Y2zS3rhbpdb3T0W7geZrWezT1aNqw3a55YawpUrZUhNN4ocanCHniCKcvM0Md4CttO0YbxFbbNSkjDjWWapGehPDXXSanHk/wDK+PBrz4unNe75rutdKS7sS2WlCa0WaEf9OvDu1KWsddO/LHlh44crPDFmHb6wrf1puLEF31rBeFmm0qUasNI+KMO5GEe5GD6cvsUXjgvGV2YmuqpNJabBXlqw0jpx5eaaWPijLGMI/aDW0fBhy9bNfmH7uvqyR/8AT2+y07TT5ddJZ5YTQh/V94AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKKfCKzzTZm3DLGaMZZbq0lh3v9SMVX1nvhE/2oXH5L/zirCDWLKG67Hc2VuF7usFKFKhTuqzzSyw781OE0Y+eaLtLg8vf1Aw55Jsn5MjnABB2f3COwzllap7ksNn7O4glh/qWWnU4tOz6/8AEn0jy/8ALDl+xXyrwzMx5qk0ZLiw3JLGPJL8TVjpD7fjAX0FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeG2XmTuXDfoKvvAX2FCdsvMncuG/QVfeOZwlw0sSUrylhinC12WqwzR+dGwRnpVZPHDjTTQm+zk+0F3R1zLrG2HcfYZo4gwzb5bXY6keLPDTSelPpCMZJ5e5NDWHI7GCmHwkF1WKleeEL6p0ZZbZaadps9WeENOPJJGnGXXv6ceZUNcv4Sb6Lgf79t/CipoDULgv1Z62QGDY1JozRlu2STWPehGMIf00gklGfBY7X/B/k+X8YpMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABRL4RP9qFx+S/8AOKsKz3wif7ULj8l/5xVhBrfl7+oGHPJNk/JkfHmziSfB+WmIcTUpOPVu+w1KtKXvz6aS/wBYwfZl7+oGHPJNk/JkdR4Una+4z8nTf3SgzGvG22q8bwtFvt1ee0Wq0VJqtarPHWaeaaOsYx/i+cAAAAAAAAAAAAAAAWE4COM7bcOcVHDfxlSa77+pT0alPXWWWrJLGeSf/wDM0v8A3eJoOzL4InbGYQ/eav5FRpoCn/wk30XA/wB+2/hRU0XL+Em+i4H+/bfwoqaA0/4LHa/4P8ny/jFJiM+Cx2v+D/J8v4xSYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACifwikIwzPuKMYc918n88VYGmfCNyUunN65bLLNa4XZfVg1/RLb8Xx4cWP+6nPLrDWWMYQj4o/bFB+W3A2t1lxJRtuN8QWGvdtnrQn/RLDLNGa0QhHWEJppoQ4sI92GkY+MFrcv4RhgHDkIwjCMLpsusI/wDRkdQ4Una+4z8nTf3SpIo06dGjJRoyS06cksJZJZYaQlhDkhCEO8jfhSdr7jPydN/dKDL4AAAAAAAAAAAAAAAEr8ETtjMIfvNX8io00Zl8ETtjMIfvNX8io00BT/4Sb6Lgf79t/Cipo1Jz5yrufNjB8LkvGtNY7XZ541rDbJJYRjRqaacsO7LHuwVqwpwLr9hiOnHE2J7u7DU6kIz/AKHLPGtXkhHlhDWGkmvf5ecFjOC3LNLwf8HcaWMNbuljDXvaxSW+S5bssVzXRZLpu2hLZ7HZKMtGhSl5pZJYaQg+sAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGvCk7X3Gfk6b+6VJTicY4duzFmGLfhy+qdSpd9vpfFWiSnUjJNNLrCOkJoc3MDIoaL7J+S+5r06zqGyfkvua9Os6gM6Bovsn5L7mvTrOobJ+S+5r06zqAzoGi+yfkvua9Os6hsn5L7mvTrOoDOgaL7J+S+5r06zqGyfkvua9Os6gM6Bovsn5L7mvTrOobJ+S+5r06zqAzoGi+yfkvua9Os6hsn5L7mvTrOoDOgaL7J+S+5r06zqGyfkvua9Os6gM6Bovsn5L7mvTrOobJ+S+5r06zqAp/wRO2Mwh+81fyKjTREuCeDrldg3FNhxLcN2XhRvKwzxnoT1LfPPLCMZYyx1ljyR5IxS0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKocPPNLEeG5rswTh+11Lvp2+zTWi3WilHSpPLrxYU4R/wDjDnjGMOfk8amkb9vuMYxje9vjGPPGNonj/wCQa9DIXs7fW97d0ib1nZ2+t7W7083rBr0Mhezt9b3t3SJvWdnb63vbukTesGvQyF7O31va3enm9Z2dvre9u6RN6wa9DIXs7fW97d0ib1nZ2+t7W7083rBr0Mhezt9b3t3SJvWdnb63vbukTesGvQyF7O31va3enm9Z2dvre9u6RN6wa9DIXs7fW97d0ib1nZ2+t7W7083rBr0Mhezt9b3t3SJvWdnb63vbukTesGvQyF7O31va3enm9Z2dvre9u6RN6wa9DIXs7fW97d0ib1nZ2+t7W7083rBr0Mhezt9b3t3SJvW5TCuPcYYYvuzXxc2ILfZ7XZ5+NLH46aaWbvyzSxjpNLHvRBrMOs5U4nnxnlxcGKalCWhUvKxSV6lOWOsJZ4w0mhDxawi7MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACDuFXkbNmxdtjvK5rVQsmIbukmp0o14xhTr0o6x+LmjD/AGx15YR07vKq5sm5y7quvrGm0UAZ17Jucu6rr6xpmybnLuq6+sabRQBnXsm5y7quvrGmbJucu6rr6xptFAGdeybnLuq6+sabRQBnXsm5y7quvrGmbJucu6rr6xptFAGdeybnLuq6+saZsm5y7quvrGm0UAZ17Jucu6rr6xpmybnLuq6+sabRQBnXsm5y7quvrGmbJucu6rr6xptFAGdeybnLuq6+saZsm5y7quvrGm0UAZ17Jucu6rr6xpmybnLuq6+sabRQBnXsm5y7quvrGm5XCnBBzMt19UKF/z3ZdN3RmhGtaJbVLWmhL3YSyy88ft5F/wHGYTuKwYZw1d2H7rkjJYrvs8lnoyxjrHiyw05XJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADyDw6tm3im0YJy2v3FdlslK11rsssa8lGrNGEs8dYQ0jGHL3XaUa8KTtfcZ+Tpv7pQVs22cUeA9ydJqm2zijwHuTpNVVEBa7bZxR4D3J0mqbbOKPAe5Ok1VUQFrttnFHgPcnSapts4o8B7k6TVVRAWu22cUeA9ydJqm2zijwHuTpNVVEBa7bZxR4D3J0mqbbOKPAe5Ok1VUQF3sl+FTiDHuZ9yYRteE7qsVC8as8k9elXqTTycWnNNyQjyR/2rWsy+CJ2xmEP3mr+RUaaAA8g8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArTw1857/wAA0LtwthOvGxXleNKa0Wi3QhCM9GlCOkJZNeaaMddY9yEPGrPltwhMycJ4ns942vEdvviwRqw/S7HbasastWTXlhDX/bHTmjDTT7NUg/CJ/tQuPyX/AJxVhBsFdNtpXldVjvGhCMKVroSV6evPxZ5YTQ/pFH3Ck7X3Gfk6b+6V27L39QMOeSbJ+TI6jwpO19xn5Om/ulBl8AAAAAAAAAAAAAAACV+CJ2xmEP3mr+RUaaMy+CJ2xmEP3mr+RUaaAgvhi5tXtljgywUMPcWlfF81Z6dG0TycaFCnJCWM80IR5ON86WENe/r3FN8K595qXDiGne/yvvK8PnwmrWa2Vo1KVWXuwjLHkh9sNIp8+Em+i4H+/bfwoqaA1ty8xLZ8Y4HubFNlpTUaV52SS0QpzR1jJGMOWXXxR1g55GfBY7X/AAf5Pl/GKTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUS+ET/ahcfkv/OKsKz3wif7ULj8l/5xVhBrfl7+oGHPJNk/JkdR4Una+4z8nTf3Su3Ze/qBhzyTZPyZH0YvuOxYmwteeHrxl41kvGyz2erDxTQ01/hz/wAAZEDs2ZuCb7y/xjbsNX7Z5qdezVIwp1NPmV6evzakse7CMOXxczrIAAAAAAAAAAAAAAJX4InbGYR/eKv5FRpopXwB8rLfUv2fMu+LHNRsVnpTUbq+Ml0jWnmhGWepLr3IQ1hCPd1iuoCn/wAJN9FwP9+2/hRU0XL+Em+i4H+/bfwoqaA0/wCCx2v+D/J8v4xSYjPgsdr/AIP8ny/jFJgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKJfCJ/tQuPyX/nFWFaj4RqwWmlj7Dd4zU4/o1e7p6ck+nJx5Z+WH26RhH+Kq8OflBrfl7+oGHPJNk/Jkc4jTg2Y8ujHWVNy17BaaMbbYbJSsdus0sfnUalOSEvNHl0jCGsI91JvFm+rHzA6rmHl9g/MC7IXfiy5LPeNOT/2p5tZKtKPflnljCaHnQvV4G2WE1SaaS9cS05Yx1hL+kUo6eLX4tZLizfVj5jizfVj5gVr2Ncs984l9PS9g2Ncs984l9PS9hZIBW3Y1yz3ziX09L2DY1yz3ziX09L2FkgFbdjXLPfOJfT0vYNjXLPfOJfT0vYWSAVt2Ncs984l9PS9g2Ncs984l9PS9hZIBW3Y1yz3ziX09L2DY1yz3ziX09L2Fk4QjGOkIavPFm+rHzArXsa5Z75xL6el7Dm8H8FLKbD94y2602S8b8nk0jJSvG0QmpSxh3eJJLLCb7JtYeJPPFm+rHzHFm+rHzA9NmoULLZ6dns1GnRo05YSyU6csJZZYQ5oQhDmg9j9cWb6sfM8RhGENYwjCEO7EFPvhJvouB/v238KKmiznD/x3c+JMZXNhq57ZQtstyU6sbVVozQmllrVIywjT1hyRjLCSGvejHRWMGn/AAWO1/wf5Pl/GKTEf8HG7692ZF4OslpkjJWhddKeaWPPDjQ40IeaMEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhvhcZY18ycsZ5Lrp8e+rqqRtdilhDWNWGkYT04feh/WWDNutSqUa09GtTmp1Kc0ZZ5JoaRljDkjCMO5FsQgLPzgzYZzEtda/rjryXBf9SEY1Z5KetC0zd+eWHNN/zQ5+7qDPy6r0vK6bVC1XVeNrsFohzVbNWmpTw/jLGEXNfL/HnhtiXrWv7SRcQ8F3OS6bTNTo4cpXpShzVrFa6c0I/wmjCb+jiNnnObwDvL+an7QOo/L/HnhtiXrWv7R8v8eeG2Jeta/tO3bPOc3gHeX81P2jZ4zm8A7y/mp+0DqPy/x54bYl61r+0/dnzFx/QryVqeNsR8eSPGl415Vpoa/ZGbSLtezznN4B3l/NT9p7bLwc85rRaJKMMEWylx5oQ49WrTkll5dNYxjNzAuJwOs0rzzLy8tMt/zfHXxc9eWz17Rpp8fJNLrJPHTk43JNCOne17qb0UcGDKibKfAM92264UrTfFvr/pNvqUoxjTlm00lkljHljCWHd7sYxSuAAAAAADP7hVZ54wvfMm9cN3DfVtui5botM9klkseGaelXqTTycWnNNyQjyR/2rWsy+CJ2xmEP3mr+RUaaMy+CJ2xmEP3mr+RUaaAgvhi5tXtljgywUMPcWlfF81Z6dG0TycaFCnJCWM80IR5ON86WENe/r3FN8K595qXDiGne/yvvK8PnwmrWa2Vo1KVWXuwjLHkh9sNIp8+Em+i4H+/bfwoqaA1ty8xLZ8Y4HubFNlpTUaV52SS0QpzR1jJGMOWXXxR1g55GfBY7X/AAf5Pl/GKTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//9k=" style="width:14px;height:14px;object-fit:contain;filter:brightness(0) saturate(100%) invert(55%) sepia(60%) saturate(400%) hue-rotate(110deg)">სკანერი</div>
+      <div class="home-title">დაასკანერე.<br><em>იცოდე.</em><br>გადაწყვიტე.</div>
+      <div class="home-sub" style="margin-top:12px">მყისიერად შეამოწმე ნებისმიერი პროდუქტი შენი კვების გეგმის მიხედვით</div>
+    </div>
+    <div class="scan-btn-wrap">
+      <button class="scan-btn" onclick="startScanner()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2M7 12h10M12 7v10"/></svg>
+        ბარკოდის სკანირება
+      </button>
+      <button class="manual-btn" onclick="showManual()">ხელით ძებნა</button>
+    </div>
+    <div class="targets-section">
+      <div class="section-label">შენი სამიზნეები</div>
+      <div class="targets-grid">
+        <div class="target-card">
+          <div class="target-dot" style="background:#1D9E75"></div>
+          <div class="target-name">კალორია</div>
+          <div class="target-val">3,300 <span class="target-unit">კკალ</span></div>
+        </div>
+        <div class="target-card">
+          <div class="target-dot" style="background:#378ADD"></div>
+          <div class="target-name">ცილა</div>
+          <div class="target-val">155 <span class="target-unit">გ</span></div>
+        </div>
+        <div class="target-card">
+          <div class="target-dot" style="background:#EF9F27"></div>
+          <div class="target-name">ნახშირწყლები</div>
+          <div class="target-val">400 <span class="target-unit">გ</span></div>
+        </div>
+        <div class="target-card">
+          <div class="target-dot" style="background:#D4537E"></div>
+          <div class="target-name">ცხიმი</div>
+          <div class="target-val">90 <span class="target-unit">გ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="history-section">
+      <div class="section-label">ბოლო სკანები</div>
+      <div class="history-empty" id="history-empty">სკანები ჯერ არ გაქვს</div>
+      <div id="history-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCANNER -->
+<div class="screen" id="scanner-screen">
+  <div class="scanner-header">
+    <button class="back-btn" onclick="stopScanner()">
+      <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
+    </button>
+    <div class="scanner-title">ბარკოდის სკანირება</div>
+    <div style="width:36px"></div>
+  </div>
+  <video id="video" playsinline autoplay muted></video>
+  <div class="scan-overlay">
+    <div>
+      <div class="scan-frame">
+        <div class="scan-frame-b"></div>
+        <div class="scan-line"></div>
+      </div>
+      <div class="scan-hint" style="margin-top:20px">მიმართე კამერა ბარკოდს</div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="result-screen">
+  <div style="overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1">
+    <div class="result-header">
+      <button class="result-back" onclick="showScreen('home-screen')">
+        <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
+      </button>
+      <div>
+        <div class="result-product-name" id="result-name">პროდუქტი</div>
+        <div class="result-brand" id="result-brand"></div>
+      </div>
+    </div>
+    <div class="verdict-card" id="verdict-card">
+      <div class="verdict-icon" id="verdict-icon"></div>
+      <div class="verdict-title" id="verdict-title"></div>
+      <div class="verdict-desc" id="verdict-desc"></div>
+    </div>
+    <div class="cal-hero-card">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">100გ-ზე / 1 პორციაზე</div>
+      <div class="cal-big-row">
+        <div class="cal-number" id="cal-num">0</div>
+        <div class="cal-suffix">კკალ</div>
+      </div>
+      <div class="macros-grid">
+        <div class="macro-pill">
+          <div class="macro-pill-name">ცილა</div>
+          <div class="macro-pill-val" id="r-protein" style="color:#378ADD">0</div>
+          <div class="macro-pill-unit">გრამი</div>
+        </div>
+        <div class="macro-pill">
+          <div class="macro-pill-name">ნახშირწყ.</div>
+          <div class="macro-pill-val" id="r-carbs" style="color:#EF9F27">0</div>
+          <div class="macro-pill-unit">გრამი</div>
+        </div>
+        <div class="macro-pill">
+          <div class="macro-pill-name">ცხიმი</div>
+          <div class="macro-pill-val" id="r-fat" style="color:#D4537E">0</div>
+          <div class="macro-pill-unit">გრამი</div>
+        </div>
+      </div>
+    </div>
+    <div class="remaining-card">
+      <div class="remaining-title">დარჩენილი სამიზნემდე</div>
+      <div id="remaining-rows"></div>
+    </div>
+    <button class="add-btn" onclick="addToLog()">კვება-ს დამატება</button>
+  </div>
+</div>
+
+<!-- MANUAL -->
+<div class="screen" id="manual-screen">
+  <div class="manual-header">
+    <button class="result-back" onclick="showScreen('home-screen')">
+      <svg viewBox="0 0 16 16"><polyline points="10,3 5,8 10,13"/></svg>
+    </button>
+    <div class="manual-title">პროდუქტის ძებნა</div>
+  </div>
+  <div class="manual-input-wrap">
+    <input class="manual-input" id="manual-input" placeholder="მაგ: რძე, კვერცხი, პური..." />
+  </div>
+  <button class="manual-search-btn" onclick="manualSearch()">ძებნა</button>
+  <div class="manual-results" id="manual-results"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const TARGETS={cal:3300,p:155,c:400,f:90};
+let currentProduct=null;
+let codeReader=null;
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+async function startScanner(){
+  showScreen('scanner-screen');
+  try{
+    codeReader=new ZXing.BrowserMultiFormatReader();
+    await codeReader.decodeFromVideoDevice(null,'video',async(result,err)=>{
+      if(result){
+        const code=result.getText();
+        stopScanner();
+        await lookupBarcode(code);
+      }
+    });
+  }catch(e){
+    showToast('კამერა ვერ გაიხსნა');
+    showScreen('home-screen');
+  }
+}
+
+function stopScanner(){
+  if(codeReader){codeReader.reset();codeReader=null;}
+  showScreen('home-screen');
+}
+
+async function lookupBarcode(barcode){
+  showScreen('result-screen');
+  document.getElementById('result-name').textContent='იძებნება...';
+  document.getElementById('result-brand').textContent='';
+  try{
+    const res=await fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`);
+    const data=await res.json();
+    if(data.status===1&&data.product){
+      displayProduct(data.product);
+    }else{
+      document.getElementById('result-name').textContent='პროდუქტი ვერ მოიძებნა';
+      document.getElementById('result-brand').textContent='სცადე ხელით ძებნა';
+    }
+  }catch(e){
+    showToast('შეცდომა. სცადე ხელახლა.');
+    showScreen('home-screen');
+  }
+}
+
+function displayProduct(p){
+  const n=p.nutriments;
+  const cal=Math.round(n['energy-kcal_100g']||n['energy-kcal']||0);
+  const protein=Math.round((n.proteins_100g||0)*10)/10;
+  const carbs=Math.round((n.carbohydrates_100g||0)*10)/10;
+  const fat=Math.round((n.fat_100g||0)*10)/10;
+  const name=p.product_name||p.product_name_ka||'უცნობი პროდუქტი';
+  const brand=p.brands||'';
+
+  currentProduct={name,brand,cal,protein,carbs,fat};
+
+  document.getElementById('result-name').textContent=name;
+  document.getElementById('result-brand').textContent=brand;
+  document.getElementById('cal-num').textContent=cal;
+  document.getElementById('r-protein').textContent=protein;
+  document.getElementById('r-carbs').textContent=carbs;
+  document.getElementById('r-fat').textContent=fat;
+
+  const proteinScore=protein/10;
+  const calScore=cal>500?-2:cal>300?-1:0;
+  const fatScore=fat>20?-1:0;
+  const score=proteinScore+calScore+fatScore;
+
+  const vc=document.getElementById('verdict-card');
+  vc.className='verdict-card';
+  if(score>=2){
+    vc.classList.add('green');
+    document.getElementById('verdict-icon').textContent='✓';
+    document.getElementById('verdict-title').textContent='შესანიშნავია შენი გეგმისთვის';
+    document.getElementById('verdict-desc').textContent='მაღალი ცილა, კარგი მაკრო პროფილი. ეს პროდუქტი შეესაბამება შენს bulking გეგმას.';
+  }else if(score>=0){
+    vc.classList.add('amber');
+    document.getElementById('verdict-icon').textContent='~';
+    document.getElementById('verdict-title').textContent='მისაღებია';
+    document.getElementById('verdict-desc').textContent='საშუალო პროდუქტი. შეგიძლია მიირთვა, მაგრამ უკეთესი ვარიანტებიც არსებობს.';
+  }else{
+    vc.classList.add('red');
+    document.getElementById('verdict-icon').textContent='✕';
+    document.getElementById('verdict-title').textContent='გამოტოვე';
+    document.getElementById('verdict-desc').textContent='დაბალი ცილა ან მაღალი კალორია. ეს პროდუქტი ვერ გეხმარება შენი სამიზნეების მიღწევაში.';
+  }
+
+  const log=JSON.parse(localStorage.getItem('mlog_'+today())||'[]');
+  let consumed={cal:0,p:0,c:0,f:0};
+  log.forEach(i=>{consumed.cal+=i.cal;consumed.p+=i.p;consumed.c+=i.c;consumed.f+=i.f;});
+
+  const rows=[
+    {name:'კალორია',cur:consumed.cal,add:cal,target:TARGETS.cal,color:'#1D9E75',unit:'კკალ'},
+    {name:'ცილა',cur:consumed.p,add:protein,target:TARGETS.p,color:'#378ADD',unit:'გ'},
+    {name:'ნახშირწყლები',cur:consumed.c,add:carbs,target:TARGETS.c,color:'#EF9F27',unit:'გ'},
+    {name:'ცხიმი',cur:consumed.f,add:fat,target:TARGETS.f,color:'#D4537E',unit:'გ'},
+  ];
+
+  document.getElementById('remaining-rows').innerHTML=rows.map(r=>{
+    const after=r.cur+r.add;
+    const remaining=Math.max(0,r.target-after);
+    const pct=Math.min(100,Math.round(after/r.target*100));
+    return`<div style="margin-bottom:14px">
+      <div class="remaining-row">
+        <span class="remaining-label">${r.name}</span>
+        <span class="remaining-val">${Math.round(remaining)}${r.unit} დარჩა</span>
+      </div>
+      <div class="remaining-bar"><div class="remaining-fill" style="width:${pct}%;background:${r.color}"></div></div>
+    </div>`;
+  }).join('');
+
+  addToHistory(currentProduct);
+}
+
+function addToLog(){
+  if(!currentProduct)return;
+  const log=JSON.parse(localStorage.getItem('mlog_'+today())||'[]');
+  log.push({name:currentProduct.name,detail:'სკანირებული პროდუქტი',cal:currentProduct.cal,p:currentProduct.protein,c:currentProduct.carbs,f:currentProduct.fat});
+  localStorage.setItem('mlog_'+today(),JSON.stringify(log));
+  showToast(currentProduct.name+' კვება-ში დაემატა');
+}
+
+function addToHistory(p){
+  const h=JSON.parse(localStorage.getItem('scan_history')||'[]');
+  h.unshift({name:p.name,cal:p.cal,protein:p.protein,time:new Date().toLocaleTimeString('ka',{hour:'2-digit',minute:'2-digit'})});
+  if(h.length>10)h.pop();
+  localStorage.setItem('scan_history',JSON.stringify(h));
+  renderHistory();
+}
+
+function renderHistory(){
+  const h=JSON.parse(localStorage.getItem('scan_history')||'[]');
+  const empty=document.getElementById('history-empty');
+  const list=document.getElementById('history-list');
+  if(!h.length){empty.style.display='block';list.innerHTML='';return;}
+  empty.style.display='none';
+  list.innerHTML=h.map(i=>`
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:14px;font-weight:500;margin-bottom:2px">${i.name}</div>
+        <div style="font-size:12px;color:var(--muted)">${i.cal}კკალ · ც${i.protein}გ · ${i.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+function showManual(){showScreen('manual-screen');}
+
+async function manualSearch(){
+  const q=document.getElementById('manual-input').value.trim();
+  if(!q)return;
+  const res=document.getElementById('manual-results');
+  res.innerHTML='<div class="loading"><div class="spinner"></div>იძებნება...</div>';
+  try{
+    const r=await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${encodeURIComponent(q)}&json=1&page_size=10&fields=product_name,brands,nutriments,code`);
+    const data=await r.json();
+    const products=(data.products||[]).filter(p=>p.product_name&&p.nutriments);
+    if(!products.length){res.innerHTML='<div style="color:var(--hint);font-size:13px;text-align:center;padding:20px">პროდუქტი ვერ მოიძებნა</div>';return;}
+    res.innerHTML=products.map((p,i)=>{
+      const cal=Math.round(p.nutriments['energy-kcal_100g']||0);
+      const protein=Math.round((p.nutriments.proteins_100g||0)*10)/10;
+      return`<div class="manual-result-item" onclick="selectManualProduct(${i})">
+        <div class="mri-name">${p.product_name}</div>
+        <div class="mri-detail">${p.brands||''} · ${cal}კკალ · ც${protein}გ</div>
+      </div>`;
+    }).join('');
+    window._manualProducts=products;
+  }catch(e){res.innerHTML='<div style="color:var(--hint);font-size:13px;text-align:center;padding:20px">შეცდომა. სცადე ხელახლა.</div>';}
+}
+
+function selectManualProduct(i){
+  const p=window._manualProducts[i];
+  displayProduct(p);
+  showScreen('result-screen');
+}
+
+document.getElementById('manual-input').addEventListener('keydown',e=>{if(e.key==='Enter')manualSearch();});
+
+function today(){return new Date().toISOString().split('T')[0]}
+
+renderHistory();
+</script>
+</body>
+</html>

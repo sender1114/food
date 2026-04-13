@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AI Radar">
+<title>AI Radar — GitHub Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080810;
+  --surface: #0f0f1a;
+  --card: #13131f;
+  --card2: #1a1a2e;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0f0ff;
+  --muted: rgba(240,240,255,0.4);
+  --hint: rgba(240,240,255,0.18);
+  --green: #00e5a0;
+  --green-dim: rgba(0,229,160,0.12);
+  --red: #ff4d6d;
+  --amber: #ffb347;
+  --blue: #4d9fff;
+  --purple: #a855f7;
+  --accent: #00e5a0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  overflow-x: hidden;
+}
+
+/* GRID BACKGROUND */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* HEADER */
+header {
+  padding: 40px 0 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-left {}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 12px var(--green); }
+  50% { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
+}
+
+.logo-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: 'Space Mono', monospace;
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--green);
+}
+
+.header-sub {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+}
+
+.refresh-btn {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding: 10px 18px;
+  background: var(--green-dim);
+  border: 1px solid rgba(0,229,160,0.25);
+  border-radius: 10px;
+  color: var(--green);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.refresh-btn:hover { background: rgba(0,229,160,0.18); }
+.refresh-btn:active { transform: scale(0.96); }
+.refresh-btn svg { width: 14px; height: 14px; }
+.refresh-btn.loading svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* STATS BAR */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+
+.stat-label {
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  color: var(--hint);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+.stat-value.green { color: var(--green); }
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  color: var(--hint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+
+.filter-chip {
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.filter-chip:hover { border-color: var(--green); color: var(--green); }
+.filter-chip.active {
+  background: var(--green-dim);
+  border-color: rgba(0,229,160,0.4);
+  color: var(--green);
+}
+
+/* SORT */
+.sort-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.sort-label {
+  font-size: 11px;
+  font-family: 'Space Mono', monospace;
+  color: var(--hint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sort-btns { display: flex; gap: 6px; }
+
+.sort-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sort-btn.active {
+  background: var(--card2);
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+/* REPO LIST */
+.repo-list { display: flex; flex-direction: column; gap: 10px; }
+
+.repo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.repo-card:hover {
+  border-color: rgba(0,229,160,0.2);
+  transform: translateY(-1px);
+}
+
+.repo-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.repo-name-wrap {}
+
+.repo-rank {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--hint);
+  margin-bottom: 3px;
+}
+
+.repo-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.repo-name span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.velocity-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.velocity-badge.hot {
+  background: rgba(0,229,160,0.12);
+  color: var(--green);
+  border: 1px solid rgba(0,229,160,0.2);
+}
+
+.velocity-badge.warm {
+  background: rgba(255,179,71,0.1);
+  color: var(--amber);
+  border: 1px solid rgba(255,179,71,0.2);
+}
+
+.velocity-badge.cool {
+  background: rgba(77,159,255,0.1);
+  color: var(--blue);
+  border: 1px solid rgba(77,159,255,0.15);
+}
+
+.repo-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--hint);
+}
+
+.meta-item svg { width: 12px; height: 12px; opacity: 0.6; }
+
+.meta-item.stars { color: var(--amber); }
+.meta-item.forks { color: var(--blue); }
+
+.lang-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.topic-pill {
+  padding: 2px 8px;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.15);
+  border-radius: 99px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--purple);
+}
+
+/* LOADING STATE */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  gap: 16px;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ERROR */
+.error-state {
+  background: rgba(255,77,109,0.08);
+  border: 1px solid rgba(255,77,109,0.2);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  color: var(--red);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+}
+
+/* LAST UPDATED */
+.last-updated {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--hint);
+  margin-top: 24px;
+}
+
+/* SPIKE INDICATOR */
+.spike {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-family: 'Space Mono', monospace;
+  color: var(--green);
+  background: var(--green-dim);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 8px;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@media (max-width: 600px) {
+  .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  .stat-value { font-size: 18px; }
+  header { flex-direction: column; }
+  .refresh-btn { align-self: flex-start; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="header-left">
+      <div class="logo-row">
+        <div class="logo-dot"></div>
+        <div class="logo-text">Live Monitor</div>
+      </div>
+      <h1>AI <em>Radar</em></h1>
+      <div class="header-sub">// github trending detector</div>
+    </div>
+    <button class="refresh-btn" onclick="loadRepos()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+        <path d="M21 3v5h-5"/>
+        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+        <path d="M3 21v-5h5"/>
+      </svg>
+      Refresh
+    </button>
+  </header>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-label">Tracking</div>
+      <div class="stat-value green" id="stat-count">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Top Stars/Day</div>
+      <div class="stat-value" id="stat-top">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">🔥 Spiking</div>
+      <div class="stat-value green" id="stat-hot">—</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <span class="filter-label">Topic:</span>
+    <button class="filter-chip active" data-topic="ai agent llm" onclick="setTopic(this, 'ai agent llm')">🤖 AI Agents</button>
+    <button class="filter-chip" data-topic="llm language-model" onclick="setTopic(this, 'llm language-model')">🧠 LLM</button>
+    <button class="filter-chip" data-topic="claude anthropic openai" onclick="setTopic(this, 'claude anthropic openai')">⚡ Claude/GPT</button>
+    <button class="filter-chip" data-topic="rag vector-database" onclick="setTopic(this, 'rag vector-database')">📦 RAG</button>
+    <button class="filter-chip" data-topic="mcp model-context-protocol" onclick="setTopic(this, 'mcp model-context-protocol')">🔌 MCP</button>
+  </div>
+
+  <div class="sort-row">
+    <span class="sort-label">Sort by:</span>
+    <div class="sort-btns">
+      <button class="sort-btn active" onclick="setSort(this,'stars')" data-sort="stars">⭐ Stars</button>
+      <button class="sort-btn" onclick="setSort(this,'updated')" data-sort="updated">🕐 Recent</button>
+      <button class="sort-btn" onclick="setSort(this,'forks')" data-sort="forks">🍴 Forks</button>
+    </div>
+  </div>
+
+  <div id="repo-list" class="repo-list">
+    <div class="loading-state">
+      <div class="loader"></div>
+      Scanning GitHub...
+    </div>
+  </div>
+
+  <div class="last-updated" id="last-updated"></div>
+
+</div>
+
+<script>
+const LANG_COLORS = {
+  Python: '#3572A5', JavaScript: '#f1e05a', TypeScript: '#3178c6',
+  Rust: '#dea584', Go: '#00ADD8', Java: '#b07219', 'C++': '#f34b7d',
+  C: '#555555', Ruby: '#701516', Shell: '#89e051', Jupyter: '#DA5B0B',
+};
+
+let currentTopic = 'ai agent llm';
+let currentSort = 'stars';
+let allRepos = [];
+
+function setTopic(el, topic) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentTopic = topic;
+  loadRepos();
+}
+
+function setSort(el, sort) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentSort = sort;
+  sortAndRender();
+}
+
+function sortAndRender() {
+  const sorted = [...allRepos].sort((a, b) => {
+    if (currentSort === 'stars') return b.stargazers_count - a.stargazers_count;
+    if (currentSort === 'forks') return b.forks_count - a.forks_count;
+    if (currentSort === 'updated') return new Date(b.updated_at) - new Date(a.updated_at);
+    return 0;
+  });
+  renderRepos(sorted);
+}
+
+async function loadRepos() {
+  const btn = document.querySelector('.refresh-btn');
+  btn.classList.add('loading');
+  document.getElementById('repo-list').innerHTML = `
+    <div class="loading-state">
+      <div class="loader"></div>
+      Scanning GitHub...
+    </div>`;
+
+  try {
+    const keywords = currentTopic.split(' ');
+    const query = keywords.map(k => `${k} in:name,description,topics`).join(' OR ');
+    const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&sort=${currentSort === 'updated' ? 'updated' : 'stars'}&order=desc&per_page=30`;
+
+    const res = await fetch(url, {
+      headers: { 'Accept': 'application/vnd.github.v3+json' }
+    });
+
+    if (!res.ok) {
+      if (res.status === 403) throw new Error('Rate limit hit. Wait a minute and try again.');
+      throw new Error(`GitHub API error: ${res.status}`);
+    }
+
+    const data = await res.json();
+    allRepos = data.items || [];
+
+    // Calculate velocity estimate (stars / days since created, capped)
+    const now = new Date();
+    allRepos = allRepos.map(r => {
+      const created = new Date(r.created_at);
+      const days = Math.max(1, (now - created) / (1000 * 60 * 60 * 24));
+      const starsPerDay = r.stargazers_count / days;
+      const recentBoost = (now - new Date(r.updated_at)) < (7 * 24 * 60 * 60 * 1000) ? 1.3 : 1;
+      r._velocity = Math.round(starsPerDay * recentBoost);
+      r._daysOld = Math.round(days);
+      return r;
+    });
+
+    updateStats();
+    sortAndRender();
+
+    const now2 = new Date();
+    document.getElementById('last-updated').textContent =
+      `Last updated: ${now2.toLocaleTimeString()} · ${allRepos.length} repos loaded`;
+
+  } catch (e) {
+    document.getElementById('repo-list').innerHTML = `
+      <div class="error-state">⚠ ${e.message}</div>`;
+  }
+
+  btn.classList.remove('loading');
+}
+
+function updateStats() {
+  document.getElementById('stat-count').textContent = allRepos.length;
+  const topVelocity = allRepos.reduce((max, r) => Math.max(max, r._velocity), 0);
+  document.getElementById('stat-top').textContent = `+${topVelocity.toLocaleString()}/d`;
+  const hot = allRepos.filter(r => r._velocity > 100).length;
+  document.getElementById('stat-hot').textContent = hot;
+}
+
+function getVelocityClass(v) {
+  if (v > 500) return 'hot';
+  if (v > 50) return 'warm';
+  return 'cool';
+}
+
+function getVelocityEmoji(v) {
+  if (v > 1000) return '🔥';
+  if (v > 500) return '⚡';
+  if (v > 100) return '📈';
+  return '→';
+}
+
+function renderRepos(repos) {
+  if (!repos.length) {
+    document.getElementById('repo-list').innerHTML =
+      `<div class="error-state">No repos found. Try a different topic.</div>`;
+    return;
+  }
+
+  const langColor = lang => LANG_COLORS[lang] || '#8b8b8b';
+
+  document.getElementById('repo-list').innerHTML = repos.map((r, i) => {
+    const vClass = getVelocityClass(r._velocity);
+    const vEmoji = getVelocityEmoji(r._velocity);
+    const isNew = r._daysOld < 30;
+    const topics = (r.topics || []).slice(0, 3);
+
+    return `
+    <a class="repo-card" href="${r.html_url}" target="_blank" rel="noopener"
+       style="animation-delay:${i * 0.04}s">
+      <div class="repo-top">
+        <div class="repo-name-wrap">
+          <div class="repo-rank">#${i + 1} · ${r._daysOld}d old${isNew ? ' <span class="spike">NEW</span>' : ''}</div>
+          <div class="repo-name">
+            <span>${r.owner.login}/</span>${r.name}
+          </div>
+        </div>
+        <div class="velocity-badge ${vClass}">
+          ${vEmoji} +${r._velocity.toLocaleString()}/d
+        </div>
+      </div>
+      <div class="repo-desc">${r.description || 'No description'}</div>
+      <div class="repo-meta">
+        <span class="meta-item stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          ${r.stargazers_count.toLocaleString()}
+        </span>
+        <span class="meta-item forks">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><line x1="12" y1="12" x2="12" y2="15"/></svg>
+          ${r.forks_count.toLocaleString()}
+        </span>
+        ${r.language ? `
+        <span class="meta-item">
+          <span class="lang-dot" style="background:${langColor(r.language)}"></span>
+          ${r.language}
+        </span>` : ''}
+        ${topics.map(t => `<span class="topic-pill">${t}</span>`).join('')}
+      </div>
+    </a>`;
+  }).join('');
+}
+
+// Auto-refresh every 5 minutes
+setInterval(loadRepos, 5 * 60 * 1000);
+
+// Initial load
+loadRepos();
+</script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="კვება">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" href="icon.png">
+<link rel="manifest" href="data:application/json,{&quot;name&quot;:&quot;კვება&quot;,&quot;short_name&quot;:&quot;კვება&quot;,&quot;display&quot;:&quot;standalone&quot;,&quot;background_color&quot;:&quot;%230e0e12&quot;,&quot;theme_color&quot;:&quot;%230e0e12&quot;,&quot;start_url&quot;:&quot;/food/index.html&quot;,&quot;icons&quot;:[{&quot;src&quot;:&quot;icon.png&quot;,&quot;sizes&quot;:&quot;192x192&quot;,&quot;type&quot;:&quot;image/png&quot;}]}">
+<title>კვება</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#0e0e12;color:#fff;min-height:100vh}
+.app{max-width:440px;margin:0 auto;padding:0 0 80px}
+.hero{padding:52px 20px 24px;position:relative;overflow:hidden}
+.hero-blob1{position:absolute;top:-60px;right:-40px;width:220px;height:220px;background:#1D9E75;border-radius:50%;opacity:0.07}
+.hero-blob2{position:absolute;bottom:-80px;left:-30px;width:180px;height:180px;background:#378ADD;border-radius:50%;opacity:0.06}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;position:relative;z-index:1}
+.topbar-title{font-size:24px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.topbar-date{font-size:12px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.07);padding:5px 12px;border-radius:99px}
+.cal-hero{position:relative;z-index:1}
+.cal-hero-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px}
+.cal-label{font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.cal-big{font-size:44px;font-weight:700;color:#fff;letter-spacing:-1.5px;line-height:1}
+.cal-unit{font-size:15px;color:rgba(255,255,255,0.35);font-weight:400;letter-spacing:0}
+.cal-remain-block{text-align:right}
+.cal-remain-num{font-size:22px;font-weight:600;color:#1D9E75}
+.prog-track{width:100%;height:4px;background:rgba(255,255,255,0.07);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;border-radius:99px;background:#1D9E75;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.macros-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.macro-cell{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:14px 12px}
+.macro-dot{width:6px;height:6px;border-radius:50%;margin-bottom:8px}
+.macro-name{font-size:10px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.macro-val{font-size:20px;font-weight:600;color:#fff;letter-spacing:-0.5px}
+.macro-target{font-size:11px;color:rgba(255,255,255,0.2);margin-top:2px}
+.macro-bar{width:100%;height:2px;background:rgba(255,255,255,0.07);border-radius:99px;margin-top:10px;overflow:hidden}
+.content{padding:0 16px}
+.section-hd{font-size:11px;font-weight:600;color:rgba(255,255,255,0.25);letter-spacing:0.09em;text-transform:uppercase;margin:24px 0 10px}
+.search-wrap{position:relative;margin-bottom:10px}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:0.25;pointer-events:none}
+.search-input{width:100%;padding:13px 14px 13px 42px;font-size:15px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;color:#fff;outline:none;-webkit-appearance:none}
+.search-input::placeholder{color:rgba(255,255,255,0.2)}
+.search-input:focus{border-color:rgba(29,158,117,0.4);background:rgba(255,255,255,0.08)}
+.food-list{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:8px}
+.food-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.03);cursor:pointer;transition:background 0.12s}
+.food-row:last-child{border-bottom:none}
+.food-row:active{background:rgba(255,255,255,0.07)}
+.food-name{font-size:14px;font-weight:500;color:#fff}
+.food-detail{font-size:12px;color:rgba(255,255,255,0.3);margin-top:3px}
+.food-add{width:32px;height:32px;border-radius:50%;background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.25);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#1D9E75;font-size:22px;line-height:1;font-weight:300;background:none}
+.log-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.03)}
+.log-row:last-child{border-bottom:none}
+.log-right{display:flex;align-items:center;gap:8px}
+.log-cal{font-size:13px;font-weight:600;color:#1D9E75;min-width:52px;text-align:right}
+.log-qty{display:flex;align-items:center;gap:5px}
+.qty-btn{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;cursor:pointer;color:#fff;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qty-num{font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);min-width:20px;text-align:center}
+.log-del{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.15);font-size:20px;line-height:1;padding:0 2px;flex-shrink:0}
+.log-del:active{color:#E24B4A}
+.empty-log{padding:28px;text-align:center;font-size:13px;color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.02)}
+.reset-btn{width:100%;margin-top:24px;padding:14px;font-size:14px;border:1px solid rgba(255,255,255,0.07);border-radius:14px;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.25);cursor:pointer;-webkit-appearance:none}
+.reset-btn:active{background:rgba(255,255,255,0.08)}
+.toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);background:#1D9E75;color:#fff;font-size:14px;font-weight:500;padding:11px 22px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity 0.25s;white-space:nowrap;z-index:999}
+.toast.show{opacity:1}
+.cat-label{font-size:10px;color:rgba(255,255,255,0.2);padding:8px 16px 4px;background:rgba(255,255,255,0.02);text-transform:uppercase;letter-spacing:0.06em}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <div class="hero-blob1"></div>
+    <div class="hero-blob2"></div>
+    <div class="topbar">
+      <div class="topbar-title">კვება</div>
+      <div class="topbar-date" id="date-label"></div>
+    </div>
+    <div class="cal-hero">
+      <div class="cal-hero-top">
+        <div>
+          <div class="cal-label">მიღებული</div>
+          <div class="cal-big"><span id="cal-consumed">0</span><span class="cal-unit"> კკალ</span></div>
+        </div>
+        <div class="cal-remain-block">
+          <div class="cal-label">დარჩენილი</div>
+          <div class="cal-remain-num" id="cal-remain">3,300 კკალ</div>
+        </div>
+      </div>
+      <div class="prog-track"><div class="prog-fill" id="cal-bar" style="width:0%"></div></div>
+      <div class="macros-row">
+        <div class="macro-cell">
+          <div class="macro-dot" style="background:#378ADD"></div>
+          <div class="macro-name">ცილა</div>
+          <div class="macro-val" id="p-cur">0გ</div>
+          <div class="macro-target">სულ 155გ</div>
+          <div class="macro-bar"><div id="p-bar" style="width:0%;height:100%;border-radius:99px;background:#378ADD;transition:width 0.4s"></div></div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-dot" style="background:#EF9F27"></div>
+          <div class="macro-name">ნახშირწყ.</div>
+          <div class="macro-val" id="c-cur">0გ</div>
+          <div class="macro-target">სულ 400გ</div>
+          <div class="macro-bar"><div id="c-bar" style="width:0%;height:100%;border-radius:99px;background:#EF9F27;transition:width 0.4s"></div></div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-dot" style="background:#D4537E"></div>
+          <div class="macro-name">ცხიმი</div>
+          <div class="macro-val" id="f-cur">0გ</div>
+          <div class="macro-target">სულ 90გ</div>
+          <div class="macro-bar"><div id="f-bar" style="width:0%;height:100%;border-radius:99px;background:#D4537E;transition:width 0.4s"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section-hd">საკვების ძებნა</div>
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none" stroke="white" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.5"/><line x1="10" y1="10" x2="14" y2="14"/></svg>
+      <input class="search-input" id="search" placeholder="ქართულად ან ინგლისურად..." oninput="filterFoods(this.value)"/>
+    </div>
+    <div id="food-list"></div>
+    <div class="section-hd">დღევანდელი ჟურნალი</div>
+    <div class="food-list" id="log-list"><div class="empty-log">საკვები ჯერ არ არის დამატებული</div></div>
+    <button class="reset-btn" onclick="resetDay()">დღის გადატვირთვა</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const TARGETS={cal:3300,p:155,c:400,f:90};
+
+const FOODS=[
+{ka:'მთლიანი კვერცხი',en:'egg whole',detail:'1 კვერცხი (50გ)',cal:70,p:6,c:0,f:5},
+{ka:'კვერცხის ცილა',en:'egg white',detail:'3 ცილა (99გ)',cal:52,p:11,c:1,f:0},
+{ka:'კვერცხის გული',en:'egg yolk',detail:'1 გული',cal:55,p:3,c:0,f:5},
+{ka:'მოხარშული კვერცხი',en:'boiled egg',detail:'1 ცალი (50გ)',cal:68,p:6,c:1,f:5},
+{ka:'შემწვარი კვერცხი',en:'fried egg',detail:'1 ცალი (50გ)',cal:90,p:6,c:0,f:7},
+{ka:'წიწილის მკერდი',en:'chicken breast',detail:'200გ მომხარშული',cal:220,p:46,c:0,f:5},
+{ka:'წიწილის ბარკალი',en:'chicken leg thigh',detail:'150გ',cal:250,p:28,c:0,f:15},
+{ka:'წიწილის ფრთა',en:'chicken wing',detail:'100გ',cal:203,p:19,c:0,f:14},
+{ka:'მწვადი',en:'grilled meat shashlik',detail:'150გ',cal:260,p:32,c:0,f:14},
+{ka:'საქონლის ხორცი',en:'beef ground',detail:'150გ',cal:230,p:30,c:0,f:12},
+{ka:'საქონლის სტეიკი',en:'beef steak',detail:'150გ',cal:270,p:36,c:0,f:13},
+{ka:'ღვიძლი',en:'beef liver',detail:'100გ',cal:135,p:20,c:4,f:4},
+{ka:'ინდაური',en:'turkey',detail:'150გ',cal:189,p:34,c:0,f:5},
+{ka:'ღორის ხორცი',en:'pork',detail:'150გ',cal:297,p:28,c:0,f:20},
+{ka:'კონსერვირებული თინუსი',en:'tuna canned',detail:'1 ქილა (120გ)',cal:120,p:26,c:0,f:1},
+{ka:'ორაგული',en:'salmon',detail:'150გ',cal:280,p:34,c:0,f:15},
+{ka:'კოჭა',en:'cod fish',detail:'150გ',cal:130,p:29,c:0,f:1},
+{ka:'ფორელი',en:'trout',detail:'150გ',cal:215,p:30,c:0,f:10},
+{ka:'ლოქო',en:'carp fish',detail:'150გ',cal:162,p:25,c:0,f:7},
+{ka:'კრევეტი',en:'shrimp prawn',detail:'100გ',cal:99,p:20,c:1,f:1},
+{ka:'ბერძნული იოგურტი',en:'greek yogurt',detail:'200გ',cal:130,p:20,c:8,f:2},
+{ka:'ხაჭო',en:'cottage cheese',detail:'200გ',cal:180,p:24,c:6,f:5},
+{ka:'მთლიანი რძე',en:'whole milk',detail:'250მლ',cal:150,p:8,c:12,f:8},
+{ka:'უცხიმო რძე',en:'skim milk',detail:'250მლ',cal:85,p:8,c:12,f:0},
+{ka:'სულგუნი',en:'sulguni cheese',detail:'50გ',cal:160,p:12,c:0,f:13},
+{ka:'ჩვილი ყველი',en:'fresh cheese',detail:'50გ',cal:130,p:8,c:1,f:11},
+{ka:'ყველი (ხმელი)',en:'hard cheese cheddar',detail:'30გ',cal:120,p:7,c:0,f:10},
+{ka:'კეფირი',en:'kefir',detail:'250მლ',cal:100,p:8,c:10,f:2},
+{ka:'მაწონი',en:'matsoni sour cream yogurt',detail:'200გ',cal:140,p:7,c:8,f:8},
+{ka:'ნაღები',en:'cream',detail:'1 სუფ. კოვზი',cal:52,p:0,c:0,f:6},
+{ka:'კარაქი',en:'butter',detail:'1 სუფ. კოვზი (14გ)',cal:100,p:0,c:0,f:11},
+{ka:'შრატის ცილა',en:'whey protein powder',detail:'1 პორცია (30გ)',cal:120,p:24,c:3,f:2},
+{ka:'კაზეინი',en:'casein protein',detail:'1 პორცია (30გ)',cal:115,p:24,c:2,f:1},
+{ka:'შვრია',en:'oats oatmeal',detail:'80გ გაუმხარშავი',cal:300,p:10,c:52,f:5},
+{ka:'თეთრი ბრინჯი',en:'white rice',detail:'100გ გაუმხარშავი',cal:350,p:7,c:78,f:1},
+{ka:'ყავისფერი ბრინჯი',en:'brown rice',detail:'100გ გაუმხარშავი',cal:360,p:8,c:75,f:3},
+{ka:'მაკარონი',en:'pasta spaghetti',detail:'100გ გაუმხარშავი',cal:355,p:12,c:71,f:2},
+{ka:'თეთრი პური',en:'white bread',detail:'2 ნაჭერი (60გ)',cal:160,p:5,c:30,f:2},
+{ka:'მთლიანი პური',en:'whole wheat bread',detail:'2 ნაჭერი (60გ)',cal:140,p:6,c:26,f:2},
+{ka:'ლავაში',en:'lavash flatbread',detail:'1 ფურცელი (60გ)',cal:165,p:5,c:33,f:1},
+{ka:'მჭადი',en:'mchadi cornbread',detail:'1 ცალი (80გ)',cal:175,p:3,c:36,f:2},
+{ka:'კვინოა',en:'quinoa',detail:'100გ გაუმხარშავი',cal:368,p:14,c:64,f:6},
+{ka:'ტკბილი კარტოფილი',en:'sweet potato',detail:'200გ',cal:180,p:4,c:42,f:0},
+{ka:'კარტოფილი',en:'potato',detail:'200გ მომხარშული',cal:154,p:4,c:36,f:0},
+{ka:'ხახვი',en:'onion',detail:'100გ',cal:40,p:1,c:9,f:0},
+{ka:'ნიორი',en:'garlic',detail:'10გ',cal:15,p:1,c:3,f:0},
+{ka:'პომიდორი',en:'tomato',detail:'1 საშუალო (120გ)',cal:22,p:1,c:5,f:0},
+{ka:'კიტრი',en:'cucumber',detail:'1 საშუალო (120გ)',cal:16,p:1,c:4,f:0},
+{ka:'წიწაკა',en:'bell pepper',detail:'1 საშუალო (120გ)',cal:31,p:1,c:7,f:0},
+{ka:'ბადრიჯანი',en:'eggplant aubergine',detail:'200გ',cal:50,p:2,c:12,f:0},
+{ka:'კომბოსტო',en:'cabbage',detail:'100გ',cal:25,p:1,c:6,f:0},
+{ka:'ყვავილოვანი კომბოსტო',en:'cauliflower',detail:'100გ',cal:25,p:2,c:5,f:0},
+{ka:'ბროკოლი',en:'broccoli',detail:'100გ',cal:34,p:3,c:7,f:0},
+{ka:'სპანახი',en:'spinach',detail:'100გ',cal:23,p:3,c:4,f:0},
+{ka:'სალათა',en:'lettuce salad',detail:'100გ',cal:15,p:1,c:3,f:0},
+{ka:'სტაფილო',en:'carrot',detail:'1 საშუალო (80გ)',cal:33,p:1,c:8,f:0},
+{ka:'ჭარხალი',en:'beet beetroot',detail:'100გ',cal:43,p:2,c:10,f:0},
+{ka:'ლობო (შავი)',en:'black beans',detail:'100გ მომხარშული',cal:132,p:9,c:24,f:1},
+{ka:'ლობო (წითელი)',en:'kidney beans red',detail:'100გ მომხარშული',cal:127,p:9,c:23,f:1},
+{ka:'ოხრახუში',en:'parsley',detail:'20გ',cal:7,p:1,c:1,f:0},
+{ka:'ბანანი',en:'banana',detail:'1 საშუალო (120გ)',cal:105,p:1,c:27,f:0},
+{ka:'ვაშლი',en:'apple',detail:'1 საშუალო (150გ)',cal:78,p:0,c:21,f:0},
+{ka:'ფორთოხალი',en:'orange',detail:'1 საშუალო (150გ)',cal:70,p:1,c:18,f:0},
+{ka:'მანდარინი',en:'mandarin tangerine',detail:'2 ცალი (120გ)',cal:62,p:1,c:16,f:0},
+{ka:'მოცვი',en:'blueberry',detail:'100გ',cal:57,p:1,c:14,f:0},
+{ka:'მარწყვი',en:'strawberry',detail:'100გ',cal:32,p:1,c:8,f:0},
+{ka:'ყურძენი',en:'grapes',detail:'100გ',cal:69,p:1,c:18,f:0},
+{ka:'ატამი',en:'peach',detail:'1 ცალი (150გ)',cal:58,p:1,c:14,f:0},
+{ka:'გარგარი',en:'apricot',detail:'3 ცალი (90გ)',cal:44,p:1,c:11,f:0},
+{ka:'ლიმონი',en:'lemon',detail:'1 ცალი',cal:17,p:0,c:5,f:0},
+{ka:'ანანასი',en:'pineapple',detail:'100გ',cal:50,p:1,c:13,f:0},
+{ka:'მანგო',en:'mango',detail:'100გ',cal:60,p:1,c:15,f:0},
+{ka:'კივი',en:'kiwi',detail:'2 ცალი (150გ)',cal:90,p:2,c:22,f:1},
+{ka:'წყალყინული',en:'watermelon',detail:'200გ',cal:60,p:1,c:15,f:0},
+{ka:'ხეხილი',en:'melon',detail:'150გ',cal:60,p:1,c:15,f:0},
+{ka:'ნიგოზი',en:'walnut',detail:'30გ',cal:196,p:5,c:4,f:19},
+{ka:'ნუში',en:'almond',detail:'30გ',cal:173,p:6,c:6,f:15},
+{ka:'კეშიუ',en:'cashew',detail:'30გ',cal:163,p:4,c:9,f:13},
+{ka:'თხილი',en:'hazelnut',detail:'30გ',cal:188,p:4,c:5,f:18},
+{ka:'მიწის თხილი',en:'peanut groundnut',detail:'30გ',cal:170,p:7,c:5,f:15},
+{ka:'არაქისის კარაქი',en:'peanut butter',detail:'2 სუფ. კოვზი (32გ)',cal:190,p:8,c:7,f:16},
+{ka:'ნუშის კარაქი',en:'almond butter',detail:'2 სუფ. კოვზი (32გ)',cal:196,p:7,c:6,f:18},
+{ka:'ავოკადო',en:'avocado',detail:'ნახევარი (70გ)',cal:113,p:1,c:6,f:10},
+{ka:'ზეითუნის ზეთი',en:'olive oil',detail:'1 სუფ. კოვზი (14გ)',cal:120,p:0,c:0,f:14},
+{ka:'მზესუმზირის ზეთი',en:'sunflower oil',detail:'1 სუფ. კოვზი (14გ)',cal:124,p:0,c:0,f:14},
+{ka:'ქოქოსის ზეთი',en:'coconut oil',detail:'1 სუფ. კოვზი (14გ)',cal:121,p:0,c:0,f:14},
+{ka:'მაიონეზი',en:'mayonnaise',detail:'1 სუფ. კოვზი (15გ)',cal:94,p:0,c:0,f:10},
+{ka:'ხინკალი',en:'khinkali dumpling',detail:'1 ცალი (70გ)',cal:145,p:8,c:18,f:5},
+{ka:'ლობიანი',en:'lobiani bean bread',detail:'1 ნაჭერი (120გ)',cal:280,p:10,c:38,f:9},
+{ka:'ხაჩაპური',en:'khachapuri cheese bread',detail:'1 ნაჭერი (150გ)',cal:380,p:14,c:42,f:18},
+{ka:'ფხალი',en:'pkhali spinach walnut',detail:'100გ',cal:120,p:5,c:10,f:7},
+{ka:'საცივი',en:'satsivi chicken walnut',detail:'150გ',cal:210,p:18,c:5,f:14},
+{ka:'ლობიო',en:'lobio bean stew',detail:'150გ',cal:160,p:9,c:22,f:4},
+{ka:'ბადრიჯნის ხიზილალა',en:'badrijani nigvzit eggplant walnut',detail:'100გ',cal:130,p:4,c:8,f:10},
+{ka:'სოუს-ტყემალი',en:'tkemali plum sauce',detail:'1 სუფ. კოვზი',cal:20,p:0,c:5,f:0},
+{ka:'ჩაქაფული',en:'chakapuli lamb stew',detail:'150გ',cal:180,p:18,c:5,f:10},
+{ka:'ოჯახური',en:'ojakhuri potato pork',detail:'200გ',cal:320,p:18,c:22,f:18},
+{ka:'პასკა',en:'paska easter bread',detail:'1 ნაჭერი (100გ)',cal:320,p:7,c:52,f:9},
+{ka:'ჩურჩხელა',en:'churchkhela',detail:'1 ცალი (60გ)',cal:190,p:3,c:38,f:4},
+{ka:'გოზინაყი',en:'gozinaki walnut honey candy',detail:'30გ',cal:140,p:2,c:18,f:7},
+{ka:'ყავა (შავი)',en:'black coffee',detail:'1 ჭიქა (240მლ)',cal:5,p:0,c:1,f:0},
+{ka:'ყავა რძით',en:'coffee with milk latte',detail:'1 ჭიქა (300მლ)',cal:120,p:6,c:10,f:6},
+{ka:'ჩაი (შავი)',en:'black tea',detail:'1 ჭიქა',cal:2,p:0,c:0,f:0},
+{ka:'მწვანე ჩაი',en:'green tea',detail:'1 ჭიქა',cal:2,p:0,c:0,f:0},
+{ka:'წყალი',en:'water',detail:'500მლ',cal:0,p:0,c:0,f:0},
+{ka:'ფორთოხლის წვენი',en:'orange juice',detail:'250მლ',cal:112,p:2,c:26,f:0},
+{ka:'ვაშლის წვენი',en:'apple juice',detail:'250მლ',cal:115,p:0,c:28,f:0},
+{ka:'შაქარი',en:'sugar',detail:'1 სუფ. კოვზი (12გ)',cal:46,p:0,c:12,f:0},
+{ka:'თაფლი',en:'honey',detail:'1 სუფ. კოვზი (21გ)',cal:64,p:0,c:17,f:0},
+{ka:'ჯემი',en:'jam',detail:'1 სუფ. კოვზი (20გ)',cal:56,p:0,c:14,f:0},
+{ka:'შოკოლადი (შავი)',en:'dark chocolate',detail:'30გ',cal:170,p:2,c:13,f:12},
+{ka:'შოკოლადი (რძიანი)',en:'milk chocolate',detail:'30გ',cal:160,p:2,c:18,f:9},
+{ka:'ნაყინი',en:'ice cream',detail:'100გ',cal:207,p:4,c:24,f:11},
+{ka:'ბლინი',en:'pancake',detail:'2 ცალი (100გ)',cal:210,p:6,c:28,f:8},
+{ka:'ვაფლი',en:'waffle',detail:'1 ცალი (75გ)',cal:230,p:5,c:33,f:9},
+{ka:'კრეკერი',en:'cracker',detail:'5 ცალი (30გ)',cal:130,p:2,c:20,f:5},
+{ka:'ჩიფსი',en:'chips crisps potato',detail:'30გ',cal:152,p:2,c:15,f:10},
+{ka:'პოპკორნი',en:'popcorn',detail:'30გ',cal:110,p:3,c:22,f:1},
+{ka:'გრანოლა',en:'granola',detail:'50გ',cal:220,p:5,c:32,f:8},
+{ka:'შვრიის ნამცხვარი',en:'oat cookie',detail:'2 ცალი (40გ)',cal:180,p:3,c:26,f:7},
+{ka:'პიცა',en:'pizza',detail:'1 ნაჭერი (100გ)',cal:266,p:11,c:33,f:10},
+{ka:'ჰამბურგერი',en:'hamburger burger',detail:'1 ცალი',cal:354,p:20,c:29,f:17},
+{ka:'ფრი',en:'french fries',detail:'100გ',cal:312,p:4,c:41,f:15},
+{ka:'სუში',en:'sushi roll',detail:'6 ცალი (120გ)',cal:200,p:8,c:38,f:2},
+{ka:'ბოსტნეული სუპი',en:'vegetable soup',detail:'300მლ',cal:80,p:4,c:14,f:1},
+{ka:'წიწაკა (წითელი)',en:'red pepper chili',detail:'1 ცალი (100გ)',cal:31,p:1,c:7,f:0},
+{ka:'სოკო',en:'mushroom',detail:'100გ',cal:22,p:3,c:3,f:0},
+{ka:'სიმინდი',en:'corn maize',detail:'100გ',cal:96,p:3,c:21,f:1},
+{ka:'ბარდა',en:'peas green',detail:'100გ',cal:81,p:5,c:14,f:0},
+{ka:'ოსპი',en:'lentil',detail:'100გ მომხარშული',cal:116,p:9,c:20,f:0},
+{ka:'ბოლოკი',en:'radish',detail:'100გ',cal:16,p:1,c:3,f:0},
+{ka:'მარგარიტა სალათა',en:'caesar salad',detail:'150გ',cal:150,p:8,c:8,f:10},
+{ka:'ახალი სალათა',en:'fresh vegetable salad',detail:'150გ',cal:45,p:2,c:8,f:1},
+{ka:'ტაბულე',en:'tabbouleh salad',detail:'150გ',cal:140,p:4,c:20,f:5},
+{ka:'ჰუმუსი',en:'hummus',detail:'50გ',cal:117,p:5,c:10,f:7},
+{ka:'ტოფუ',en:'tofu soy',detail:'100გ',cal:76,p:8,c:2,f:4},
+{ka:'ედამამე',en:'edamame soybean',detail:'100გ',cal:122,p:11,c:9,f:5},
+{ka:'ცრეკერი (ბრინჯის)',en:'rice cake',detail:'2 ცალი (18გ)',cal:70,p:1,c:15,f:1},
+{ka:'ბაგელი',en:'bagel',detail:'1 ცალი (100გ)',cal:270,p:10,c:53,f:1},
+{ka:'ტორტილია',en:'tortilla wrap',detail:'1 ცალი (45გ)',cal:146,p:4,c:25,f:4},
+{ka:'კუსკუსი',en:'couscous',detail:'100გ გაუმხარშავი',cal:376,p:13,c:77,f:1},
+{ka:'გრეჩკა',en:'buckwheat',detail:'100გ გაუმხარშავი',cal:343,p:13,c:71,f:3},
+{ka:'სიმინდის ფაფა',en:'cornmeal porridge',detail:'100გ',cal:97,p:2,c:21,f:1},
+{ka:'კეჩუპი',en:'ketchup tomato sauce',detail:'1 სუფ. კოვზი (17გ)',cal:20,p:0,c:5,f:0},
+{ka:'მდოგვი',en:'mustard',detail:'1 სუფ. კოვზი (5გ)',cal:10,p:1,c:1,f:1},
+{ka:'სოიოს სოუსი',en:'soy sauce',detail:'1 სუფ. კოვზი (15მლ)',cal:9,p:1,c:1,f:0},
+{ka:'ბალზამიკო',en:'balsamic vinegar',detail:'1 სუფ. კოვზი (15მლ)',cal:14,p:0,c:3,f:0},
+{ka:'მარინარა',en:'marinara tomato pasta sauce',detail:'100გ',cal:70,p:2,c:11,f:2},
+{ka:'სალსა',en:'salsa sauce',detail:'2 სუფ. კოვზი (30გ)',cal:15,p:1,c:3,f:0},
+{ka:'ტაჰინი',en:'tahini sesame paste',detail:'1 სუფ. კოვზი (15გ)',cal:89,p:3,c:3,f:8},
+{ka:'კოლა',en:'cola soda drink',detail:'330მლ ქილა',cal:140,p:0,c:35,f:0},
+{ka:'ენერგეტიკული სასმელი',en:'energy drink',detail:'250მლ',cal:110,p:1,c:27,f:0},
+{ka:'ბიფშტექსი',en:'beefsteak minced meat',detail:'150გ',cal:290,p:25,c:5,f:19},
+{ka:'კოტლეტი',en:'kotleti meat cutlet',detail:'1 ცალი (100გ)',cal:230,p:18,c:10,f:14},
+{ka:'ძეხვი',en:'sausage',detail:'2 ნაჭერი (60გ)',cal:186,p:8,c:2,f:17},
+{ka:'შაქრის ბურთი',en:'meatball',detail:'3 ცალი (90გ)',cal:220,p:16,c:8,f:14},
+{ka:'სალო',en:'lard fat bacon',detail:'30გ',cal:270,p:1,c:0,f:29},
+{ka:'ბეკონი',en:'bacon',detail:'2 ნაჭერი (28გ)',cal:108,p:7,c:0,f:9},
+{ka:'ვარდკაჭაჭა',en:'turkey breast deli',detail:'50გ',cal:50,p:10,c:1,f:1},
+{ka:'კრაბის ჩხირები',en:'crab sticks surimi',detail:'100გ',cal:95,p:8,c:14,f:1},
+{ka:'ლიმონნათი',en:'lemonade',detail:'300მლ',cal:120,p:0,c:30,f:0},
+{ka:'ქათმის ბულიონი',en:'chicken broth soup',detail:'300მლ',cal:40,p:5,c:2,f:1},
+{ka:'პომიდვრის სუპი',en:'tomato soup',detail:'300მლ',cal:90,p:3,c:14,f:3},
+{ka:'ბულკა',en:'bread roll bun',detail:'1 ცალი (50გ)',cal:145,p:5,c:27,f:2},
+{ka:'კროასანი',en:'croissant',detail:'1 ცალი (60გ)',cal:231,p:5,c:26,f:12},
+{ka:'მაფინი',en:'muffin cupcake',detail:'1 ცალი (80გ)',cal:280,p:4,c:42,f:11},
+{ka:'ტარტი',en:'tart pie',detail:'1 ნაჭერი (100გ)',cal:300,p:4,c:38,f:15},
+{ka:'ნამცხვარი',en:'cake',detail:'1 ნაჭერი (100გ)',cal:350,p:4,c:50,f:15},
+{ka:'ბისკვიტი',en:'biscuit cookie',detail:'3 ცალი (30გ)',cal:140,p:2,c:20,f:6},
+{ka:'ჰალვა',en:'halva sesame',detail:'30გ',cal:155,p:3,c:15,f:10},
+{ka:'ლოქვი',en:'loquat fruit',detail:'100გ',cal:47,p:0,c:12,f:0},
+{ka:'ბლუბერი',en:'acai berry',detail:'100გ',cal:70,p:1,c:10,f:5},
+{ka:'ჩია თესლი',en:'chia seeds',detail:'2 სუფ. კოვზი (20გ)',cal:97,p:3,c:9,f:6},
+{ka:'სელის თესლი',en:'flaxseed linseed',detail:'1 სუფ. კოვზი (10გ)',cal:55,p:2,c:3,f:4},
+{ka:'კანაფის თესლი',en:'hemp seeds',detail:'2 სუფ. კოვზი (20გ)',cal:111,p:6,c:2,f:10},
+{ka:'სოიოს რძე',en:'soy milk',detail:'250მლ',cal:80,p:7,c:4,f:4},
+{ka:'ნუშის რძე',en:'almond milk',detail:'250მლ',cal:40,p:1,c:3,f:3},
+{ka:'შვრიის რძე',en:'oat milk',detail:'250მლ',cal:120,p:3,c:22,f:2},
+{ka:'კვერცხი (მძიმე)',en:'scrambled eggs',detail:'2 კვერცხი + რძე',cal:180,p:13,c:2,f:13},
+{ka:'ომლეტი',en:'omelette',detail:'2 კვერცხი',cal:185,p:13,c:1,f:14},
+];
+
+let log=JSON.parse(localStorage.getItem('mlog_'+today())||'[]');
+
+function today(){return new Date().toISOString().split('T')[0]}
+function fmt(n){return Math.round(n).toLocaleString()}
+function pct(v,t){return Math.min(100,Math.round(v/t*100))}
+
+function update(){
+  const tot={cal:0,p:0,c:0,f:0};
+  log.forEach(i=>{tot.cal+=i.cal*i.qty;tot.p+=i.p*i.qty;tot.c+=i.c*i.qty;tot.f+=i.f*i.qty});
+  document.getElementById('cal-consumed').textContent=fmt(tot.cal);
+  document.getElementById('cal-remain').textContent=fmt(Math.max(0,TARGETS.cal-tot.cal))+' კკალ';
+  document.getElementById('cal-bar').style.width=pct(tot.cal,TARGETS.cal)+'%';
+  document.getElementById('p-cur').textContent=Math.round(tot.p)+'გ';
+  document.getElementById('c-cur').textContent=Math.round(tot.c)+'გ';
+  document.getElementById('f-cur').textContent=Math.round(tot.f)+'გ';
+  document.getElementById('p-bar').style.width=pct(tot.p,TARGETS.p)+'%';
+  document.getElementById('c-bar').style.width=pct(tot.c,TARGETS.c)+'%';
+  document.getElementById('f-bar').style.width=pct(tot.f,TARGETS.f)+'%';
+  renderLog();
+  localStorage.setItem('mlog_'+today(),JSON.stringify(log));
+}
+
+function addFood(idx){
+  const food=FOODS[idx];
+  const existing=log.findIndex(i=>i.ka===food.ka);
+  if(existing>=0){log[existing].qty+=1;}
+  else{log.push({...food,qty:1});}
+  update();
+  showToast(food.ka+' დამატებულია');
+}
+
+function changeQty(idx,delta){
+  log[idx].qty+=delta;
+  if(log[idx].qty<=0)log.splice(idx,1);
+  update();
+}
+
+function filterFoods(q){
+  const el=document.getElementById('food-list');
+  if(!q||q.trim().length<1){
+    el.innerHTML='<div class="food-list"><div class="empty-log">დაიწყე აკრეფა — 200+ საკვები</div></div>';
+    return;
+  }
+  const ql=q.toLowerCase().trim();
+  const results=FOODS.filter(f=>
+    f.ka.toLowerCase().includes(ql)||
+    f.en.toLowerCase().includes(ql)
+  ).slice(0,20);
+
+  if(!results.length){
+    el.innerHTML='<div class="food-list"><div class="empty-log">ვერ მოიძებნა — სცადე სხვა სახელი</div></div>';
+    return;
+  }
+
+  el.innerHTML='<div class="food-list">'+results.map(f=>{
+    const idx=FOODS.indexOf(f);
+    return `<div class="food-row" onclick="addFood(${idx})">
+      <div style="flex:1;min-width:0">
+        <div class="food-name">${f.ka}</div>
+        <div class="food-detail">${f.detail} &middot; ${f.cal}კკალ &middot; ც${f.p}გ ნ${f.c}გ ცხ${f.f}გ</div>
+      </div>
+      <button class="food-add" onclick="event.stopPropagation();addFood(${idx})">+</button>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+function renderLog(){
+  const el=document.getElementById('log-list');
+  if(!log.length){el.innerHTML='<div class="empty-log">საკვები ჯერ არ არის დამატებული</div>';return}
+  el.innerHTML=log.map((f,i)=>`
+    <div class="log-row">
+      <div style="flex:1;min-width:0;margin-right:8px">
+        <div class="food-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.ka}</div>
+        <div class="food-detail">${f.detail} &middot; ც${f.p}გ ნ${f.c}გ ცხ${f.f}გ</div>
+      </div>
+      <div class="log-right">
+        <div class="log-qty">
+          <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+          <span class="qty-num">x${f.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+        </div>
+        <div class="log-cal">${Math.round(f.cal*f.qty)}კკ</div>
+        <button class="log-del" onclick="changeQty(${i},-999)">×</button>
+      </div>
+    </div>`).join('');
+}
+
+function resetDay(){
+  if(confirm('გადატვირთავ დღევანდელ ჟურნალს?')){log=[];update();}
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+document.getElementById('food-list').innerHTML='<div class="food-list"><div class="empty-log">დაიწყე აკრეფა — 200+ საკვები ხელმისაწვდომია</div></div>';
+
+const d=new Date();
+const days=['კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი'];
+const months=['იანვ','თებ','მარ','აპრ','მაი','ივნ','ივლ','აგვ','სექ','ოქტ','ნოე','დეკ'];
+document.getElementById('date-label').textContent=days[d.getDay()]+', '+d.getDate()+' '+months[d.getMonth()];
+update();
+</script>
+</body>
+</html>
